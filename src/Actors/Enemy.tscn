@@ -1,0 +1,197 @@
+[gd_scene load_steps=22 format=2]
+
+[ext_resource path="res://assets/zombies.png" type="Texture" id=1]
+[ext_resource path="res://src/Actors/Enemy.gd" type="Script" id=2]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 21.1418
+height = 26.7617
+
+[sub_resource type="AtlasTexture" id=2]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 0, 180, 50, 90 )
+
+[sub_resource type="AtlasTexture" id=3]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 100, 180, 50, 90 )
+
+[sub_resource type="AtlasTexture" id=4]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 0, 90, 50, 90 )
+
+[sub_resource type="AtlasTexture" id=5]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 150, 180, 50, 90 )
+
+[sub_resource type="AtlasTexture" id=6]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 0, 270, 50, 90 )
+
+[sub_resource type="AtlasTexture" id=7]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 50, 0, 50, 90 )
+
+[sub_resource type="AtlasTexture" id=8]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 100, 90, 50, 90 )
+
+[sub_resource type="AtlasTexture" id=9]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 50, 90 )
+
+[sub_resource type="AtlasTexture" id=10]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 50, 0, 50, 90 )
+
+[sub_resource type="AtlasTexture" id=11]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 100, 0, 50, 90 )
+
+[sub_resource type="AtlasTexture" id=12]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 150, 0, 50, 90 )
+
+[sub_resource type="AtlasTexture" id=13]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 50, 90, 50, 90 )
+
+[sub_resource type="AtlasTexture" id=14]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 100, 90, 50, 90 )
+
+[sub_resource type="AtlasTexture" id=15]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 150, 90, 50, 90 )
+
+[sub_resource type="AtlasTexture" id=16]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 50, 180, 50, 90 )
+
+[sub_resource type="SpriteFrames" id=17]
+animations = [ {
+"frames": [ SubResource( 2 ) ],
+"loop": true,
+"name": "uppercutted_left",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 3 ) ],
+"loop": true,
+"name": "falling_left",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 4 ) ],
+"loop": true,
+"name": "take_hit_1",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 5 ) ],
+"loop": true,
+"name": "falling_right",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 6 ) ],
+"loop": true,
+"name": "uppercutted_right",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 7 ), SubResource( 8 ) ],
+"loop": true,
+"name": "stand",
+"speed": 2.0
+}, {
+"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ) ],
+"loop": true,
+"name": "walk",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 13 ) ],
+"loop": true,
+"name": "take_hit_2",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 14 ), SubResource( 15 ), SubResource( 15 ), SubResource( 15 ) ],
+"loop": true,
+"name": "attack",
+"speed": 1.0
+}, {
+"frames": [ SubResource( 16 ) ],
+"loop": true,
+"name": "downsmashed",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=18]
+extents = Vector2( 5.84561, 17.2367 )
+
+[sub_resource type="RectangleShape2D" id=19]
+extents = Vector2( 23.0374, 35.2668 )
+
+[node name="Enemy" type="KinematicBody2D"]
+collision_layer = 2
+collision_mask = 9
+script = ExtResource( 2 )
+speed = Vector2( 50, 0 )
+health = 3.0
+
+[node name="Collision_Body" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2( -0.17841, 1.64697 )
+shape = SubResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0, -7.41629 )
+frames = SubResource( 17 )
+animation = "walk"
+frame = 1
+playing = true
+
+[node name="Attack_Areas" type="Area2D" parent="AnimatedSprite"]
+collision_layer = 2
+
+[node name="front_collision" type="CollisionShape2D" parent="AnimatedSprite/Attack_Areas"]
+modulate = Color( 1, 0, 0, 1 )
+position = Vector2( -29.7092, -8.96681 )
+shape = SubResource( 18 )
+disabled = true
+
+[node name="Hitbox_Area" type="Area2D" parent="AnimatedSprite"]
+collision_layer = 2147483648
+
+[node name="body_hitbox" type="CollisionShape2D" parent="AnimatedSprite/Hitbox_Area"]
+light_mask = -2147483647
+position = Vector2( -0.17841, 6.59132 )
+shape = SubResource( 19 )
+
+[node name="VisibilityEnabler2D" type="VisibilityEnabler2D" parent="."]
+visible = false
+position = Vector2( 0, 2 )
+rect = Rect2( -20, -35, 40, 70 )
+process_parent = true
+physics_process_parent = true
+
+[node name="HealthText" type="RichTextLabel" parent="."]
+margin_left = -37.1892
+margin_top = -51.5673
+margin_right = 37.8108
+margin_bottom = -36.5673
+text = "Health : "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="area_entered" from="AnimatedSprite/Hitbox_Area" to="." method="_on_Hitbox_Area_area_entered"]
+[connection signal="body_entered" from="AnimatedSprite/Hitbox_Area" to="." method="_on_Hitbox_Area_body_entered"]
